@@ -34,16 +34,16 @@ channel ADC without need for any input to initiate sampling.
 #include <math.h>
 
 /////// USER SHOULD MAKE SURE THESE DEFINES CORRESPOND TO THEIR SETUP ///////
-#define ADCS 1      // Number of connected MCP3201.
+#define ADCS 5      // Number of connected MCP3201.
 
 #define OUTPUT_DATA "/home/pi/TTT4280/lab/lab1/adcData.bin" // path and filename to dump buffered ADC data
 
 /* RPi PIN ASSIGNMENTS */
 #define MISO1 24     // ADC 1 MISO (BCM 24 aka GPIO 24).
-#define MISO2 5     //     2
-#define MISO3 6     //     3
-#define MISO4 12    //     4
-#define MISO5 13    //     5
+#define MISO2 25     //     25
+#define MISO3 12     //     12
+#define MISO4 16    //     16
+#define MISO5 20    //     20
 
 #define MOSI 10     // GPIO for SPI MOSI (BCM 10 aka GPIO 10 aka SPI_MOSI). MOSI not in use here due to single ch. ADCs, but must be defined anyway.
 #define SPI_SS 8    // GPIO for slave select (BCM 8 aka GPIO 8 aka SPI_CE0).
