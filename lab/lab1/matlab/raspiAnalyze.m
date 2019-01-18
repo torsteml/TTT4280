@@ -22,7 +22,7 @@ path = '../adcData.bin';
 
 % Plot all raw data and corresponding amplitude response
 fh_raw = figure;    % fig handle
-plot(rawData,'-o');
+plot(rawData);
 ylim([0, 4095]) % 12 bit ADC gives values in range [0, 4095]
 xlabel('sample');
 ylabel('conversion value');
