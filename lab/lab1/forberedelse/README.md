@@ -10,6 +10,6 @@
   ### b)
   0,806 mV er oppløsningen for ADCen. 3,3V/4096=0,806mV
   ### c)
-  
+  Pinnene kan ta en driftspenning på opp til 5,5V, dvs. 2,2V mer enn ved 3,3V.
   
 ## Oppgave 3
