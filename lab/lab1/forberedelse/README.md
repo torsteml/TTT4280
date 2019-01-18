@@ -13,3 +13,4 @@
   Pinnene kan ta en driftspenning på opp til 5,5V, dvs. 2,2V mer enn ved 3,3V.
   
 ## Oppgave 3
+Fordelen med Direct Memory Access er at data kan sendes direkte til minnet fra enheter tilkoblet bussen, istedenfor å sende dataen via prosessoren. Dette gjør at prosessoren ikke forsinker dataen, og at data ikke blir mistet i vente av å bli prosessert.
