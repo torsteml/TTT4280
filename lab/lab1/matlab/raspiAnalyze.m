@@ -13,7 +13,7 @@ channels = 5;   % Number of ADC channels used
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-path = 'full/path/to/data/file/adcData.bin';
+path = '../adcData.bin';
 
 % Run function to import all data from the binary file. If you change the
 % name or want to read more files, you must change the function
