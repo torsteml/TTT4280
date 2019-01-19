@@ -2,7 +2,7 @@
 
 ## Oppgave 1
 
-![Blokkskjema](path.to.figure)
+![Blokkskjema](../../../images/schematics/blokkskjema.svg)
 
 ## Oppgave 2
   ### a)
