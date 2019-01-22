@@ -21,7 +21,9 @@ path = '//run/user/1000/gvfs/smb-share:server=10.22.44.135,share=pi/TTT4280/lab/
 [rawData, nomTp] = raspiImport(path,channels);
 
 % Plot all raw data and corresponding amplitude response
+close all
 fh_raw = figure;    % fig handle
+subplot(2,1,1);
 plot(rawData);
 ylim([0, 4095]) % 12 bit ADC gives values in range [0, 4095]
 xlabel('sample');
@@ -32,3 +34,16 @@ for i = 1:channels
 end
 legend(legendStr,'location','best');
 title('Raw ADC data');
+
+Fs=15330;
+freqres=abs(fft(rawData,Fs));
+subplot(2,1,2);
+semilogx(freqres(2:end,1:end));
+xlabel('frequency');
+ylabel('amplitude');
+legendStr = cell(1,channels);
+for i = 1:channels
+    legendStr{1,i} = ['ch. ' num2str(i)];
+end
+legend(legendStr,'location','best');
+title('Frequency response');
