@@ -54,4 +54,10 @@ delay12 = (ind12-max(lags12))/(upSampleRate*Fs);
 delay13 = (ind13-max(lags13))/(upSampleRate*Fs);
 delay23 = (ind23-max(lags23))/(upSampleRate*Fs);
 
+
 fprintf("1-2: %.2e\t 1-3: %.2e\t 2-3: %.2e\n",delay12,delay13,delay23);
+
+%Angle from the centerpoint, counterclockwise
+theta = atan(sqrt(3)*(-delay12-delay13)/(-delay12+delay13+2*delay23));
+
+fprintf("Angle: %.2f\n",mod(-theta*360/(2*pi),360));
