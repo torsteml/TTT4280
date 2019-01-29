@@ -37,7 +37,7 @@ end
 legend(legendStr,'location','best');
 title('Raw ADC data');
 
-Fs=15330;
+Fs=31250;
 freqres=abs(fft(selectedData,Fs));
 subplot(2,1,2);
 semilogx(freqres(2:end,1:end));
