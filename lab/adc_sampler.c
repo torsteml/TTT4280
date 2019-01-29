@@ -92,9 +92,9 @@ int main(int argc, char *argv[])
 {
     // Parse command line arguments
     long num_samples = 0;
-    if (argc <= 1) {
-        fprintf(stderr, "Usage: %s NUM_SAMPLES\n\n"
-                        "Example: %s %d\n", argv[0], argv[0], DEFAULT_NUM_SAMPLES);
+    if (argc <= 1 || argv[2]=='\0') {
+        fprintf(stderr, "Usage: %s NUM_SAMPLES %s\n\n"
+                        "Example: %s %d %s\n", argv[0], "FILE_NAME.bin", argv[0], DEFAULT_NUM_SAMPLES,"adcData.bin");
         exit(1);
     }
     sscanf(argv[1], "%ld", &num_samples);
@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
     double output_nominal_period_us = floor(nominal_period_us); //the clock is accurate only to us resolution
 
     // Path to your data directory/file from previous define
-    const char *output_filename = OUTPUT_DATA;
+    const char *output_filename = argv[2];
 
     // Write sample period and data to file
     FILE *adc_data_file = fopen(output_filename, "wb+");
