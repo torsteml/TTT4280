@@ -36,7 +36,7 @@ channel ADC without need for any input to initiate sampling.
 /////// USER SHOULD MAKE SURE THESE DEFINES CORRESPOND TO THEIR SETUP ///////
 #define ADCS 5      // Number of connected MCP3201.
 
-#define OUTPUT_DATA "/home/pi/TTT4280/lab/lab1/adcData.bin" // path and filename to dump buffered ADC data
+#define OUTPUT_DATA "/home/pi/TTT4280/lab/lab2/adcData.bin" // path and filename to dump buffered ADC data
 
 /* RPi PIN ASSIGNMENTS */
 #define MISO1 24     // ADC 1 MISO (BCM 24 aka GPIO 24).
