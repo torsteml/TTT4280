@@ -115,6 +115,7 @@ int main(int argc, char *argv[])
     };
 
     // Initialize the pigpio library
+    gpioCfgClock(5, 0, 0);
     if (gpioInitialise() < 0) {
        return 1;
     }
