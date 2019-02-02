@@ -14,7 +14,7 @@ selectedChannels = 3; % First channels
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-path = '//run/user/1000/gvfs/smb-share:server=10.22.43.82,share=pi/TTT4280/lab/lab2/adcData.bin';
+path = '//run/user/1000/gvfs/smb-share:server=pigt.local,share=pi/TTT4280/lab/lab2/adcData.bin';
 
 % Run function to import all data from the binary file. If you change the
 % name or want to read more files, you must change the function
@@ -22,7 +22,7 @@ path = '//run/user/1000/gvfs/smb-share:server=10.22.43.82,share=pi/TTT4280/lab/l
 [rawData, nomTp] = raspiImport(path,channels);
 selectedData = rawData(1:end,1:selectedChannels);
 Fs = 31250;
-upSampleRate = 16;
+upSampleRatio = 16;
 
 % Separating the array 
 mic1 = selectedData(1:end,1);
@@ -30,34 +30,59 @@ mic2 = selectedData(1:end,2);
 mic3 = selectedData(1:end,3);
 
 % Upsampling the array
-umic1 = interp(mic1,upSampleRate);
-umic2 = interp(mic2,upSampleRate);
-umic3 = interp(mic3,upSampleRate);
+umic1 = interp(mic1,upSampleRatio);
+umic2 = interp(mic2,upSampleRatio);
+umic3 = interp(mic3,upSampleRatio);
 
 % Filtering out DC, f<5 Hz
-fmic1 = highpass(umic1,5/Fs);
-fmic2 = highpass(umic2,5/Fs);
-fmic3 = highpass(umic3,5/Fs);
+fmic1 = highpass(umic1,5,upSampleRatio*Fs);
+fmic2 = highpass(umic2,5,upSampleRatio*Fs);
+fmic3 = highpass(umic3,5,upSampleRatio*Fs);
 
-% Crosscorrelation between the different pairs
-[xc12,lags12] = xcorr(fmic1,fmic2);
-[xc13,lags13] = xcorr(fmic1,fmic3);
-[xc23,lags23] = xcorr(fmic2,fmic3);
+% Crosscorrelation between the different pairs, maxlags
+[xc21,lags21] = xcorr(fmic2,fmic1,100);
+[xc31,lags31] = xcorr(fmic3,fmic1,100);
+[xc32,lags32] = xcorr(fmic3,fmic2,100);
 
 % Finding indices for max values 
-[val12,ind12] = max(abs(xc12));
-[val13,ind13] = max(abs(xc13));
-[val23,ind23] = max(abs(xc23));
+[val21,ind21] = max(abs(xc21));
+[val31,ind31] = max(abs(xc31));
+[val32,ind32] = max(abs(xc32));
 
 % Finding delay in seconds
-delay12 = (ind12-max(lags12))/(upSampleRate*Fs);
-delay13 = (ind13-max(lags13))/(upSampleRate*Fs);
-delay23 = (ind23-max(lags23))/(upSampleRate*Fs);
+delay21 = (ind21-max(lags21))/(upSampleRatio*Fs);
+delay31 = (ind31-max(lags31))/(upSampleRatio*Fs);
+delay32 = (ind32-max(lags32))/(upSampleRatio*Fs);
 
-
-fprintf("1-2: %.2e\t 1-3: %.2e\t 2-3: %.2e\n",delay12,delay13,delay23);
+%Print delays between the different pairs
+fprintf("2-1: %.2e\t 3-1: %.2e\t 3-2: %.2e\n",delay21,delay31,delay32);
 
 %Angle from the centerpoint, counterclockwise
-theta = atan(sqrt(3)*(-delay12-delay13)/(-delay12+delay13+2*delay23));
+theta = atan(sqrt(3)*(delay21+delay31)/(delay21-delay31-2*delay32));
 
-fprintf("Angle: %.2f\n",mod(-theta*360/(2*pi),360));
+%Print angle in degrees
+fprintf("Angle: %.2f\n",mod(theta*360/(2*pi),360));
+
+refreshdata
+subplot(2,3,1)
+plot(lags21,xc21);
+title("XCorr 2-1");
+subplot(2,3,2)
+plot(lags31,xc31);
+title("XCorr 3-1");
+subplot(2,3,3)
+plot(lags32,xc32);
+title("XCorr 3-2");
+subplot(2,3,[4 5])
+plot(fmic1);
+hold on
+plot(fmic2);
+hold on
+plot(fmic3);
+hold off
+title("Signals");
+legend('Mic 1','Mic 2','Mic 3');
+subplot(2,3,6)
+rose(theta);
+title("Angle");
+hold off

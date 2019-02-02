@@ -10,7 +10,7 @@
 
 % Definitions
 channels = 5;   % Number of ADC channels used
-selectedChannels = 3; % First channels
+selectedChannels = 5; % First channels
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
