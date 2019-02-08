@@ -13,7 +13,7 @@ channels = 5;   % Number of ADC channels used
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-path = '//run/user/1000/gvfs/smb-share:server=10.22.44.135,share=pi/TTT4280/lab/lab1/adcData.bin';
+path = '//run/user/1000/gvfs/smb-share:server=10.22.43.82,share=pi/TTT4280/lab/lab2/adcData.bin';
 
 % Run function to import all data from the binary file. If you change the
 % name or want to read more files, you must change the function

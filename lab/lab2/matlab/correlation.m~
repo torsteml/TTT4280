@@ -83,6 +83,6 @@ hold off
 title("Signals");
 legend('Mic 1','Mic 2','Mic 3');
 subplot(2,3,6)
-polarhistogram(theta,15);
+polar(theta);
 title("Angle");
 hold off
