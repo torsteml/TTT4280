@@ -14,8 +14,8 @@ selectedChannels = 2; % First channels
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-%path = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/adcData.bin';
-path = '/Volumes/pi/TTT4280/lab/lab3/adcData.bin';
+path = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/adcData.bin';
+%path = '/Volumes/pi/TTT4280/lab/lab3/adcData.bin';
 
 % Run function to import all data from the binary file. If you change the
 % name or want to read more files, you must change the function
@@ -55,16 +55,30 @@ Fs=31250;
 I = rawData(1:end,1);
 Im = I-mean(I);
 Q = rawData(1:end,2);
+Qm = Q-mean(Q);
 
-IFFT = fft(Im);
-L = length(Im);
+N = 1024;
+[s,f,t] = spectrogram(Im,N,[],N,Fs);
+[s2,f2,t2] = spectrogram(Qm,N,[],N,Fs);
 
-fd = Fs*(0:(L-1))/L;
-f = transpose(fd);
-lin = linspace(-Fs/2,Fs/2,Fs);
-plot(lin,abs(IFFT));
+fd = linspace(-Fs/2,Fs/2,size(f,1));
+f0 = 24.13e9;
+c = 3e8;
 
-[val,fmax] = max(abs(IFFT));
-v = (f(fmax))/160.9
+v = (fd.*c)./(2*f0);
+
+subplot(2,1,1);
+contourf(t,v,20*log(abs(s)));
+xlim([0 10]);
+xlabel('Time [s]');
+subplot(2,1,2);
+contourf(t,v,20*log(abs(s2)));
+xlim([0 10]);
+xlabel('Time [s]');
+
+
+
+
+
 
 
