@@ -14,7 +14,8 @@ selectedChannels = 2; % First channels
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-path = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/adcData.bin';
+%path = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/adcData.bin';
+path = '/Volumes/pi/TTT4280/lab/lab3/adcData.bin';
 
 % Run function to import all data from the binary file. If you change the
 % name or want to read more files, you must change the function
@@ -51,7 +52,19 @@ Fs=31250;
 % legend(legendStr,'location','best');
 % title('Frequency response');
 
-IFFT=abs(fft(rawData(1:end,1),Fs));
-QFFT=abs(fft(rawData(1:end,2),Fs));
+I = rawData(1:end,1);
+Im = I-mean(I);
+Q = rawData(1:end,2);
+
+IFFT = fft(Im);
+L = length(Im);
+
+fd = Fs*(0:(L-1))/L;
+f = transpose(fd);
+lin = linspace(-Fs/2,Fs/2,Fs);
+plot(lin,abs(IFFT));
+
+[val,fmax] = max(abs(IFFT));
+v = (f(fmax))/160.9
 
 
