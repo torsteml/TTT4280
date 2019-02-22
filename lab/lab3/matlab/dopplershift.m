@@ -55,16 +55,41 @@ Fs=31250;
 I = rawData(1:end,1);
 Im = I-mean(I);
 Q = rawData(1:end,2);
+Qm = Q-mean(Q);
+a = Im+1i.*Qm;
 
-IFFT = fft(Im);
-L = length(Im);
+winlen = 1024/2;
+N = 4*1024;
+[s,f,t,p] = spectrogram(a,hamming(winlen),[],N, Fs,'centered', 'yaxis');
+fhz = linspace(-Fs/2,Fs/2,size(f,1));
 
-fd = Fs*(0:(L-1))/L;
-f = transpose(fd);
-lin = linspace(-Fs/2,Fs/2,Fs);
-plot(lin,abs(IFFT));
+v = freqToSpeed(f);
+surf(t, v, 20*log10(abs(s)), 'EdgeColor', 'none');
+axis xy; axis tight; ax = gca;
+ax.YLim = [-4,4];
+colormap(jet); view(0,90);
+xlabel('Tid [s]');
+ylabel('Hastighet [m/s]');
+colorbar;
+title("Hastighet-tid diagram");
 
-[val,fmax] = max(abs(IFFT));
-v = (f(fmax))/160.9
+hold on
+m = medfreq(p,v);
+plot3(t,m,500.*ones(numel(m),1),'linewidth',2)
+axis xy;
+hold off
+max_v = max(m);
+min_v = min(m);
+mean_v = mean(m);
+std_v = std(m);
+fprintf("Maks hastighet er: %.2f m/s og %.2f m/s\n", max_v, min_v);
+fprintf("Gjennomsnittlig hastighet er: %.2f m/s\n", mean_v);
+fprintf("Standardavviket er: %.2f m/s\n", std_v);
+    
+
+
+
+
+
 
 

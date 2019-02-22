@@ -53,16 +53,50 @@ Fs=31250;
 % title('Frequency response');
 
 I = rawData(1:end,1);
+Im = I-mean(I);
 Q = rawData(1:end,2);
+Qm = Q-mean(Q);
+a = Im+1i.*Qm;
 
-IFFT = fft(I);
-L = length(I);
+winlen = 1024/2;
+N = 4*1024;
+[s,f,t,p] = spectrogram(a,hamming(winlen),[],N, Fs,'centered', 'yaxis');
+fhz = linspace(-Fs/2,Fs/2,size(f,1));
 
-fd = Fs*(0:(L-1))/L;
-f = transpose(fd);
-plot(f,abs(IFFT));
+f0 = 24.13e9;
+c = 299792458;
+v = (f.*c)./(2*f0);
+surf(t, v, 20*log10(abs(s)), 'EdgeColor', 'none');
 
-[val,fmax] = max(abs(IFFT));
-v = freq2speed(f(fmax));
+
+axis xy; 
+axis tight;     
+ax = gca;
+v_view_range = [-4,4];
+ax.YLim = v_view_range;
+colormap(jet); view(0,90);
+xlabel('Time [s]');
+ylabel('Velocity [m/s]');
+colorbar;
+title("Doppler Velocity-Time diagram");
+
+hold on
+    m1 = medfreq(p,v);
+    plot3(t,m1,500.*ones(numel(m1),1),'linewidth',4)
+    axis xy;
+    hold off
+    max_v = max(m1);
+    min_v = min(m1);
+    mean_v = mean(m1);
+    std_v = std(m1);
+    fprintf("The maximum velocities are %.2f m/s and %.2f m/s\n", max_v, min_v);
+    fprintf("The average velocity was %.2f m/s\n", mean_v);
+    fprintf("The standard deviation was %.2f m/s\n", std_v);
+    
+
+
+
+
+
 
 
