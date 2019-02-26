@@ -16,6 +16,8 @@ selectedChannels = 2; % First channels
 %% FIXME: Change this.
 %path = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/adcData.bin';
 %path = '/Volumes/pi/TTT4280/lab/lab3/målinger/1.bin';
+prompt = 'Velg måling [1-15]: ';
+filenr = input(prompt,'s');
 path = join(['../målinger/',filenr,'.bin']);
 
 % Run function to import all data from the binary file. If you change the
