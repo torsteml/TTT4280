@@ -14,7 +14,7 @@ selectedChannels = 2; % First channels
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-%folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/målinger/';
+%folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.98,share=pi/TTT4280/lab/lab3/målinger/';
 %folderpath = '/Volumes/pi/TTT4280/lab/lab3/målinger/';
 folderpath = '../målinger/';
 prompt = 'Velg måling [1-15]: ';
