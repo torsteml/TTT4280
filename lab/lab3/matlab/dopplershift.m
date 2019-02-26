@@ -14,46 +14,23 @@ selectedChannels = 2; % First channels
 
 % Open, import and close binary data file produced by Raspberry Pi
 %% FIXME: Change this.
-%path = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/adcData.bin';
-%path = '/Volumes/pi/TTT4280/lab/lab3/målinger/1.bin';
+%folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.42.193,share=pi/TTT4280/lab/lab3/målinger/';
+%folderpath = '/Volumes/pi/TTT4280/lab/lab3/målinger/';
+folderpath = '../målinger/';
 prompt = 'Velg måling [1-15]: ';
-filenr = input(prompt,'s');
-path = join(['../målinger/',filenr,'.bin']);
+while true
+    filenr = input(prompt);
+    if filenr >= 1 && filenr <= 15
+        break;
+    end
+end
+path = join([folderpath,num2str(filenr),'.bin']);
 
 % Run function to import all data from the binary file. If you change the
 % name or want to read more files, you must change the function
 % accordingly.
 [rawData, nomTp] = raspiImport(path,channels);
 Fs=31250;
-
-% % Plot all raw data and corresponding amplitude response
-% close all
-% fh_raw = figure;    % fig handle
-% subplot(2,1,1);
-% selectedData=rawData(1:end,1:selectedChannels);
-% plot(selectedData);
-% ylim([0, 4095]) % 12 bit ADC gives values in range [0, 4095]
-% xlabel('sample');
-% ylabel('conversion value');
-% legendStr = cell(1,selectedChannels);
-% for i = 1:selectedChannels
-%     legendStr{1,i} = ['ch. ' num2str(i)];
-% end
-% legend(legendStr,'location','best');
-% title('Raw ADC data');
-% 
-% Fs=31250;
-% freqres=abs(fft(selectedData,Fs));
-% subplot(2,1,2);
-% semilogx(freqres(2:end,1:end));
-% xlabel('frequency');
-% ylabel('amplitude');
-% legendStr = cell(1,selectedChannels);
-% for i = 1:selectedChannels
-%     legendStr{1,i} = ['ch. ' num2str(i)];
-% end
-% legend(legendStr,'location','best');
-% title('Frequency response');
 
 I = rawData(1:end,1);
 Im = I-mean(I);
