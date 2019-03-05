@@ -1,11 +1,8 @@
 clear;
-path = '/Volumes/pi/Videos/lab4/';
-files = dir(path);
-for i=3:length(files)
-    disp(files(i).name);
-end
-newline;
-path = join([path,input('Filename: ','s')]);
+%folderpath = '/Volumes/pi/Videos/lab4/';
+folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.81,share=pi/Videos/lab4/';
+[file, path] = uigetfile(join([folderpath,'*.mp4']));
+path = join([folderpath,file]);
 [output_channels, sample_rate] = read_video_and_extract_roi(path);
 redChannel = output_channels(1:end,1);
 redChannelHPass = highpass(redChannel,1,sample_rate);
