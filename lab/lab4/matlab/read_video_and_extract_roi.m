@@ -53,6 +53,6 @@ while hasFrame(v)
 end
 
 output_channels = [y_red', y_green', y_blue'];
-sample_rate = v.FrameRate
+sample_rate = v.FrameRate;
 
 end
