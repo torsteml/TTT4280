@@ -8,11 +8,11 @@ redChannel = output_channels(1:end,1);
 redChannelHPass = highpass(redChannel,1,sample_rate);
 [autocorrelation,lags] = xcorr(redChannelHPass, length(redChannelHPass), 'coeff');
 [peaks,locs] = findpeaks(autocorrelation);
-locsStoredCropped = locs((((length(locs))+1)/2):((length(locs))+1)/2+4);
+locsStoredCropped = locs((((length(locs))+1)/2):((length(locs))+1)/2+10);
 diffPulse = diff(locsStoredCropped);
-filtDiffPulse = zeros(0);
+filtDiffPulse 
 for i = 1:length(diffPulse)
-    if diffPulse(i) > sample_rate/200*60 
+    if diffPulse(i) < sample_rate/200*60 
         filtDiffPulse(end+1)=diffPulse(i);
     end
 end
