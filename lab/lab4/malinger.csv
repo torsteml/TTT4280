@@ -1,13 +1,13 @@
-Situasjon;Videofil;Snittpuls;Standardavvik;SNR
-1;torsteinFinger1.mp4;;;
-1;torsteinFinger2.mp4;;;
-1;torsteinFinger3.mp4;;;
-1;gauteFinger1.mp4;;;
-1;gauteFinger2.mp4;;;
-1;gauteFinger3.mp4;;;
-2;;;;
-2;;;;
-2;;;;
-2;;;;
-2;;;;
-2;;;;
+Situasjon;Videofil;Snittpuls;Standardavvik;SNR_red;SNR_green;SNR_blue;Faktiskpuls;
+1;torsteinFinger1.mp4;85;16;-;-;-;76;Nye malinger om rapport
+1;torsteinFinger2.mp4;86;8;-;-;-;75;Nye malinger om rapport
+1;torsteinFinger3.mp4;81;1;0.094;0.105;0.034;77;Nye malinger om rapport
+1;gauteFinger1.mp4;89;19;-;-;-;71;Nye malinger om rapport
+1;gauteFinger2.mp4;75;11;-;-;-;72;Nye malinger om rapport
+1;gauteFinger3.mp4;70;5;-;-;-;69;Nye malinger om rapport
+2;torsteinFinger1.mp4;68;1;-;-;-;72;
+2;torsteinFinger2.mp4;83;2;-;-;-;79;
+2;torsteinFinger3.mp4;67;1;;;;74;
+2;gauteFinger1.mp4;81;9;;;;79;
+2;gauteFinger2.mp4;85;4;;;;79;
+2;gauteFinger3.mp4;;;;;;76;
