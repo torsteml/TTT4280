@@ -28,8 +28,6 @@ while hasFrame(v)
 
     % Get user input
     if i == 1
-
-    0.7956    0.0379    0.1322    0.9202
         close all;
         imshow(frame)
         choice = questdlg('Choose region?','Choose region or whole image','Yes','No','No');

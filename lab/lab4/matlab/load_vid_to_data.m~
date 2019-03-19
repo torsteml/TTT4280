@@ -1,0 +1,10 @@
+clear;
+folderpath = '~/Videos/lab4/';
+%folderpath = '/Volumes/pi/Videos/lab4/';
+%folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.81,share=pi/Videos/lab4/';
+[file, path] = uigetfile(join([folderpath,'*.mp4']));
+path = join([path,file]);
+[output_channels, sample_rate] = read_video_and_extract_roi(path);
+[filepath,filename,ext] = fileparts(path);
+savefolder = extractAfter(filepath,'lab4/');
+save(join(['/data/',savefolder,'/',filename]),'output_channels','sample_rate');
