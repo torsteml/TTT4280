@@ -1,7 +1,12 @@
 clear;
+<<<<<<< HEAD
 %folderpath = '/Volumes/pi/Videos/lab4/';
 %folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.220.161,share=pi/Videos/lab4/';
 folderpath = '~/Videos/lab4/';
+=======
+folderpath = '/Volumes/pi/Videos/lab4/';
+%folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.81,share=pi/Videos/lab4/';
+>>>>>>> 29ea9b8cbb0e5a68a651b3d71ef8ee6691de8be6
 [file, path] = uigetfile(join([folderpath,'*.mp4']));
 path = join([path,file]);
 [output_channels, sample_rate] = read_video_and_extract_roi(path);
