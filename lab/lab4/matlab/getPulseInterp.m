@@ -6,9 +6,12 @@ clear;
 [file, path] = uigetfile(join(['*.mat']));
 path = join([path,file]);
 load(path);
-channelsHPass = highpass(output_channels,1,sample_rate);
+interpRatio = 16;
+sample_rate = sample_rate*interpRatio;
+channelsInterp = [interp(output_channels(:,1),interpRatio) interp(output_channels(:,2),interpRatio) interp(output_channels(:,3),interpRatio)];
+channelsBPass = bandpass(channelsInterp,[0.67 3.33],sample_rate); % 0.67-3.33 Hz <-> 40-200 bpm
 for j = 1:3
-    [autocorrelation(:,j),lags] = xcorr(channelsHPass(1:end,j), length(channelsHPass), 'coeff');
+    [autocorrelation(:,j),lags] = xcorr(channelsBPass(1:end,j), length(channelsBPass), 'coeff');
 end
 [peaks.red,locs.red] = findpeaks(autocorrelation(:,1));
 [peaks.green,locs.green] = findpeaks(autocorrelation(:,2));
@@ -74,3 +77,7 @@ else
     stdPulse.blue = 0;
 end
 fprintf('Red Pulse: %.1f STD: %.1f\t Green Pulse: %.1f STD: %.1f\t Blue Pulse: %.1f STD: %.1f\n',mean(pulse.red),stdPulse.red,mean(pulse.green),stdPulse.green,mean(pulse.blue),stdPulse.blue);
+subplot(2,1,1)
+plot(linspace(0,length(channelsInterp)/sample_rate,length(channelsInterp)),channelsInterp)
+subplot(2,1,2)
+plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)
