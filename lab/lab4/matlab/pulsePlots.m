@@ -1,39 +1,67 @@
-meanS1 = [79 83 80 74 71; 75 80 80 76 71; 102 138 120 74 72];
-meanS2 = [68 84 67 80 70; 75 84 67 104 69; 0 77 71 83 72];
-meanRBT = [75 79 76 68 68; 84 84 94 68 68; 76 88 101 70 60];
-stdS1 = [5 6 3 3 3; 10 4 2 5 3; 26 24 28 6 3];
-stdS2 = [3 3 1 5 5; 14 4 2 20 6; 0 4 4 6 5];
-stdRBT = [6 4 4 2 1; 15 6 24 1 1; 4 13 31 7 2];
+meanS1 = [
+    79    75   102;
+    83    80   138;
+    80    80   120;
+    74    76    74;
+    71    71    72];
+meanS2 = [
+    68    75     NaN;
+    84    84    77;
+    67    67    71;
+    80   104    83;
+    70    69    72];
+meanRBT = [
+    75    84    76;
+    79    84    88;
+    76    94   101;
+    68    68    70;
+    68    68    60];
+stdS1 = [
+     5    10    26;
+     6     4    24;
+     3     2    28;
+     3     5     6;
+     3     3     3];
+stdS2 = [     
+     3    14     NaN;
+     3     4     4;
+     1     2     4;
+     5    20     6;
+     5     6     5];
+stdRBT = [     
+     6    15     4;
+     4     6    13;
+     4    24    31;
+     2     1     7;
+     1     1     2];
 
 subplot(3,1,1)
-errorbar(meanS1(1,:),stdS1(1,:),'o r')
+set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+errorbar(meanS1,stdS1)
+ax=gca;
+ax.YGrid = 'on';
 xlim([0.75 5.25]);
 title('Puls for situasjon 1');
-xlabel('MÃ¥letilfelle');
+xlabel('Måletilfelle');
 ylabel('Puls [bpm]');
 xticks([1 2 3 4 5]);
-hold on
-errorbar(meanS1(2,:),stdS1(2,:),'o g')
-errorbar(meanS1(3,:),stdS1(3,:),'o b')
-
 subplot(3,1,2)
-errorbar(meanS2(1,:),stdS2(1,:),'- r')
+set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+errorbar(meanS2,stdS2)
+ax=gca;
+ax.YGrid = 'on';
 xlim([0.75 5.25]);
 title('Puls for situasjon 2');
-xlabel('MÃ¥letilfelle');
+xlabel('Måletilfelle');
 ylabel('Puls [bpm]');
 xticks([1 2 3 4 5]);
-hold on
-errorbar(meanS2(2,:),stdS2(2,:),'- g')
-errorbar(meanS2(3,:),stdS2(3,:),'- b')
-
 subplot(3,1,3)
-errorbar(meanRBT(1,:),stdRBT(1,:),'- r')
+set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+errorbar(meanRBT,stdRBT)
+ax=gca;
+ax.YGrid = 'on';
 xlim([0.75 5.25]);
 title('Puls for robusttest');
-xlabel('MÃ¥letilfelle');
+xlabel('Måletilfelle');
 xticks([1 2 3 4 5]);
 ylabel('Puls [bpm]');
-hold on
-errorbar(meanRBT(2,:),stdRBT(2,:),'- g')
-errorbar(meanRBT(3,:),stdRBT(3,:),'- b')

@@ -18,7 +18,7 @@ end
 [peaks.blue,locs.blue] = findpeaks(autocorrelation(:,3));
 
 if ~(isempty(locs.red))
-    locsStoredCropped.red = locs.red(((((length(locs.red))+1)/2):((length(locs.red))+1)/2+20));
+    locsStoredCropped.red = locs.red(((((length(locs.red))+1)/2):length(locs.red)));
     diffPulse.red = diff(locsStoredCropped.red);
     filtDiffPulse.red = zeros(0);
     for j = 1:length(diffPulse.red)
@@ -33,12 +33,12 @@ if ~(isempty(locs.red))
     pulse.red = (sample_rate./filtDiffPulse.red)*60;
     stdPulse.red = std(pulse.red);
 else
-   pulse.red = 0;
-   stdPulse.red = 0;
+   pulse.red = NaN;
+   stdPulse.red = NaN;
 end
 
 if ~(isempty(locs.green))
-    locsStoredCropped.green = locs.green(((((length(locs.green))+1)/2):((length(locs.green))+1)/2+20));
+    locsStoredCropped.green = locs.green((((length(locs.green))+1)/2):length(locs.green));
     diffPulse.green = diff(locsStoredCropped.green);
     filtDiffPulse.green = zeros(0);         
     for j = 1:length(diffPulse.green)
@@ -53,12 +53,12 @@ if ~(isempty(locs.green))
     pulse.green = (sample_rate./filtDiffPulse.green)*60;
     stdPulse.green = std(pulse.green);
 else
-    pulse.green = 0;
-    stdPulse.green = 0;
+    pulse.green = NaN;
+    stdPulse.green = NaN;
 end
 
 if ~(isempty(locs.blue))
-    locsStoredCropped.blue = locs.blue(((((length(locs.blue))+1)/2):((length(locs.blue))+1)/2+20));
+    locsStoredCropped.blue = locs.blue((((length(locs.blue))+1)/2):length(locs.blue));
     diffPulse.blue = diff(locsStoredCropped.blue);
     filtDiffPulse.blue = zeros(0);   
     for j = 1:length(diffPulse.blue)
@@ -73,11 +73,13 @@ if ~(isempty(locs.blue))
     pulse.blue = (sample_rate./filtDiffPulse.blue)*60;
     stdPulse.blue = std(pulse.blue);
 else
-    pulse.blue = 0;
-    stdPulse.blue = 0;
+    pulse.blue = NaN;
+    stdPulse.blue = NaN;
 end
 fprintf('Red Pulse: %.1f STD: %.1f\t Green Pulse: %.1f STD: %.1f\t Blue Pulse: %.1f STD: %.1f\n',mean(pulse.red),stdPulse.red,mean(pulse.green),stdPulse.green,mean(pulse.blue),stdPulse.blue);
 subplot(2,1,1)
+set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
 plot(linspace(0,length(channelsInterp)/sample_rate,length(channelsInterp)),channelsInterp)
 subplot(2,1,2)
+set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
 plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)
