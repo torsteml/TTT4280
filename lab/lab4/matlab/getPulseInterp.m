@@ -1,4 +1,4 @@
-%clear;
+clear;
 %folderpath = '~/Videos/lab4/';
 %folderpath = '/Volumes/pi/Videos/lab4/';
 %folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.81,share=pi/Videos/lab4/';
@@ -6,7 +6,10 @@
 [file, path] = uigetfile(join(['*.mat']));
 path = join([path,file]);
 load(path);
-channelsBPass = bandpass(output_channels,[0.67 3.33],sample_rate); % 0.67-3.33 Hz <-> 40-200 bpm
+interpRatio = 16;
+sample_rate = sample_rate*interpRatio;
+channelsInterp = [interp(output_channels(:,1),interpRatio) interp(output_channels(:,2),interpRatio) interp(output_channels(:,3),interpRatio)];
+channelsBPass = bandpass(channelsInterp,[0.67 3.33],sample_rate); % 0.67-3.33 Hz <-> 40-200 bpm
 for j = 1:3
     [autocorrelation(:,j),lags] = xcorr(channelsBPass(1:end,j), length(channelsBPass), 'coeff');
 end
@@ -15,7 +18,7 @@ end
 [peaks.blue,locs.blue] = findpeaks(autocorrelation(:,3));
 
 if ~(isempty(locs.red))
-    locsStoredCropped.red = locs.red((((length(locs.red))+1)/2):length(locs.red));
+    locsStoredCropped.red = locs.red(((((length(locs.red))+1)/2):length(locs.red)));
     diffPulse.red = diff(locsStoredCropped.red);
     filtDiffPulse.red = zeros(0);
     for j = 1:length(diffPulse.red)
@@ -76,7 +79,7 @@ end
 fprintf('Red Pulse: %.1f STD: %.1f\t Green Pulse: %.1f STD: %.1f\t Blue Pulse: %.1f STD: %.1f\n',mean(pulse.red),stdPulse.red,mean(pulse.green),stdPulse.green,mean(pulse.blue),stdPulse.blue);
 subplot(2,1,1)
 set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
-plot(linspace(0,length(output_channels)/sample_rate,length(output_channels)),output_channels)
+plot(linspace(0,length(channelsInterp)/sample_rate,length(channelsInterp)),channelsInterp)
 subplot(2,1,2)
 set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
 plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)

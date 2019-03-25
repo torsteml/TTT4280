@@ -1,7 +1,7 @@
 clear;
 % Connect to pi and cameraboard if a connection doesn't exist
 if ~exist('rpi','var')
-    rpi = raspi('pigt.local','pi','TorsteinGaute');
+    rpi = raspi('hostname.local','user','password');
 end
 if ~exist('cam','var')
    % Options for the camera
