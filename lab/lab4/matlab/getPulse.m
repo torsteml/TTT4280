@@ -1,4 +1,4 @@
-%clear;
+clear;
 %folderpath = '~/Videos/lab4/';
 %folderpath = '/Volumes/pi/Videos/lab4/';
 %folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.81,share=pi/Videos/lab4/';

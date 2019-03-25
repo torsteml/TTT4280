@@ -74,14 +74,13 @@ stdRT = [
     19   22	   28;
     17   25	   22;
     12    6	  NaN;
-    11   18	  NaN;
-    6     8	   19];
- stdKF = [
-     7    9	  NaN;
-    16   18	   23;
-     9   19	   34;
-    11   13    21;
-    12   11	  NaN];
+    11								18		NaN;
+6								8		19];
+ stdKF = [7								9		NaN;
+16								18		23;
+9								19		34;
+11								13		21;
+12								11		NaN];
 
 subplot(7,1,1)
 set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
