@@ -133,7 +133,7 @@ while true
                 errorbar(meanHP,stdHP,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('HÃ¸y puls Torstein');
+                title('Høy puls Torstein');
                 
             case 7
                 errorbar(meanKF,stdKF,'--')
@@ -152,5 +152,5 @@ while true
     ylabel('Puls [bpm]');
     xlim([0.75 5.25]);
     xticks([1 2 3 4 5]);
-    legend('Rød','Grønn','Blå','Faktisk')
+    legend('Rød','Grønn','Blå','Faktisk','Location','best')
 end
