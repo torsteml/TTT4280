@@ -151,6 +151,7 @@ while true
     xlabel('Måletilfelle');
     ylabel('Puls [bpm]');
     xlim([0.75 5.25]);
+    box on
     xticks([1 2 3 4 5]);
     legend('Rød','Grønn','Blå','Faktisk','Location','best')
 end
