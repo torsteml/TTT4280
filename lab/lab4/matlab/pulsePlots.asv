@@ -93,64 +93,95 @@ actualPulse = [
 
 prompt = 'Velg situasjon [1-7]:\n1) Transmittans boks Torstein\n2) Transmittans boks Gaute\n3) Reflektans Torstein\n4) Reflektans Gaute\n5) Transmittans direkte \n6) Høy puls\n7) Kaldre fingre\n0) Avslutt\n';
 while true
-    
+    clf
     sit = input(prompt);
     if sit >= 0 && sit <= 7
-        clf
-        set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
         switch sit
             case 1
                 errorbar(meanTBT,stdTBT,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('Transmittans boks Torstein');
-               
+                xlabel('Måletilfelle');
+                ylabel('Puls [bpm]');
+                xticks([1 2 3 4 5]);
+                legend('Rød','Grønn','Blå','Faktisk')
             case 2
                 errorbar(meanTBG,stdTBG,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('Transmittans boks Gaute');
+                xlabel('Mï¿½letilfelle');
+                ylabel('Puls [bpm]');
+                xticks([1 2 3 4 5]);
 
             case 3
                 errorbar(meanRT,stdRT,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('Reflektans Torstein');
+                xlabel('Mï¿½letilfelle');
+                xticks([1 2 3 4 5]);
+                ylabel('Puls [bpm]');
 
             case 4
                 errorbar(meanRG,stdRG,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('Reflektans Gaute');
+                xlabel('Mï¿½letilfelle');
+                xticks([1 2 3 4 5]);
+                ylabel('Puls [bpm]');
 
             case 5
                 errorbar(meanTDT,stdTDT,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('Transmittans direkte Torstein');
+                xlabel('Mï¿½letilfelle');
+                xticks([1 2 3 4 5]);
+                ylabel('Puls [bpm]');
 
             case 6
                 errorbar(meanHP,stdHP,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('HÃ¸y puls Torstein');
-                
+                xlabel('Mï¿½letilfelle');
+                xticks([1 2 3 4 5]);
+                ylabel('Puls [bpm]');
             case 7
                 errorbar(meanKF,stdKF,'--')
+                ax=gca;
+                ax.YGrid = 'on';
                 hold on
                 plot(actualPulse(:,sit),'k');
+                xlim([0.75 5.25]);
                 title('Kalde fingre Gaute');
-                
+                xlabel('Mï¿½letilfelle');
+                xticks([1 2 3 4 5]);
+                ylabel('Puls [bpm]');
             case 0
-                close all
                 break
         end
     end
-    ax=gca;
-    ax.YGrid = 'on';
-    xlabel('Måletilfelle');
-    ylabel('Puls [bpm]');
-    xlim([0.75 5.25]);
-    xticks([1 2 3 4 5]);
-    legend('Rød','Grønn','Blå','Faktisk')
+    set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
 end
