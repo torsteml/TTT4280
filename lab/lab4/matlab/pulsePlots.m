@@ -146,6 +146,7 @@ while true
                 break
         end
     end
+    set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
     ax=gca;
     ax.YGrid = 'on';
     xlabel('Måletilfelle');
