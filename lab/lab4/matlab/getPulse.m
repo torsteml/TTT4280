@@ -1,9 +1,9 @@
 clear;
 %folderpath = '~/Videos/lab4/';
-%folderpath = '/Volumes/pi/Videos/lab4/';
+folderpath = '/Volumes/pi/Videos/lab4/';
 %folderpath = '//run/user/1000/gvfs/smb-share:server=10.22.223.81,share=pi/Videos/lab4/';
-%[file, path] = uigetfile(join([folderpath,'*.mat']));
-[file, path] = uigetfile(join(['*.mat']));
+[file, path] = uigetfile(join([folderpath,'*.mat']));
+%[file, path] = uigetfile(join(['*.mat']));
 path = join([path,file]);
 load(path);
 channelsBPass = bandpass(output_channels,[0.67 3.33],sample_rate); % 0.67-3.33 Hz <-> 40-200 bpm
