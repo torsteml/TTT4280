@@ -12,7 +12,7 @@ mua_blood_oxy = @(x) interp1(muabo(:,1), muabo(:,2), x);
 mua_blood_deoxy = @(x) interp1(muabd(:,1), muabd(:,2), x);
 
 
-bvf = [1; 0.01]; %blood volume fraction, average amount of blood in the tissue
+bvf = [0.9; 0.01]; %blood volume fraction, average amount of blood in the tissue
 oxy = 0.8; %oxygenation of the blood
 
 %absorption coefficient (mu_a in lab text)
@@ -34,8 +34,8 @@ musr = (17.6*(wavelengths/500.0).^(-4) + 18.78*(wavelengths/500).^(-0.22))*100;
 %%INSERT CODE FOR CALCULATING PENETRATION DEPTH DEL
 
 pd = sqrt(1./(3.*(musr+mua).*mua));
-t_h = exp(-sqrt(3*mua(1,:).*(musr+mua(1,:)))*300e-6);
-t_l = exp(-sqrt(3*mua(2,:).*(musr+mua(2,:)))*300e-6);
+t_h = exp(-sqrt(3*mua(1,:).*(musr+mua(1,:)))*13e-3);
+t_l = exp(-sqrt(3*mua(2,:).*(musr+mua(2,:)))*13e-3);
 r_h = sqrt(3.*(musr./mua(1,:)+1));
 r_l = sqrt(3.*(musr./mua(2,:)+1));
 k_t = abs(t_h-t_l)./t_l;
