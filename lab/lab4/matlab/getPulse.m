@@ -73,25 +73,41 @@ else
     pulse.blue = NaN;
     stdPulse.blue = NaN;
 end
-fprintf('Red Pulse: %.1f STD: %.1f\t Green Pulse: %.1f STD: %.1f\t Blue Pulse: %.1f STD: %.1f\n',mean(pulse.red),stdPulse.red,mean(pulse.green),stdPulse.green,mean(pulse.blue),stdPulse.blue);
-subplot(3,1,1)
-set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
-plot(linspace(0,length(output_channels)/sample_rate,length(output_channels)),output_channels)
-subplot(3,1,2)
-set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
-plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)
-subplot(3,1,3)
-set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+% FFT for SNR and freq plot --------------------
 fcb=abs(fft(channelsBPass,8192));
-% FFT for freq plot --------------------
-    fcb=abs(fft(channelsBPass,8192));
-    l = length(channelsBPass);
-    P2 = abs(fcb/l);
-    P1 = P2(1:8192/2+1,:);
-    P1(2:end-1,:) = 2*P1(2:end-1,:);
-    fp = 60*sample_rate*(0:8192/2)/8192;
+l = length(channelsBPass);
+P2 = abs(fcb/l);
+P1 = P2(1:8192/2+1,:);
+P1(2:end-1,:) = 2*P1(2:end-1,:);
+fp = 60*sample_rate*(0:8192/2)/8192;
 % --------------------------------------
-plot(fp,P1)
-xlim([0 210])
-title('Frekvens -> pulsplot')
-xlabel('Puls [bpm]')
+leak = 40;
+sigpos = floor([mean(pulse.red)-leak:mean(pulse.red)+leak;
+          mean(pulse.green)-leak:mean(pulse.green)+leak;
+          mean(pulse.blue)-leak:mean(pulse.blue)+leak]);
+sigpow.red = sum(P1(sigpos(1,:))); sigpow.green = sum(P1(sigpos(2,:))); sigpow.blue = sum(P1(sigpos(3,:)));
+noise.red = P1(:,1); noise.red(sigpos(1,:)) = 0; noisepow.red = sum(noise.red);
+noise.green = P1(:,2); noise.green(sigpos(2,:)) = 0; noisepow.green = sum(noise.green);
+noise.blue = P1(:,3); noise.blue(sigpos(3,:)) = 0; noisepow.blue = sum(noise.blue);
+
+SNR.red = 10*log10(sigpow.red/noisepow.red);
+SNR.green = 10*log10(sigpow.green/noisepow.green);
+SNR.blue = 10*log10(sigpow.blue/noisepow.blue);
+fprintf('Red Pulse: %.1f STD: %.1f\t Green Pulse: %.1f STD: %.1f\t Blue Pulse: %.1f STD: %.1f\n',mean(pulse.red),stdPulse.red,mean(pulse.green),stdPulse.green,mean(pulse.blue),stdPulse.blue);
+fprintf('SNR[dB]: %.2f \t %.2f \t %.2f\n',SNR.red,SNR.green,SNR.blue);
+should_plot = true;
+if should_plot 
+    subplot(3,1,1)
+    set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+    plot(linspace(0,length(output_channels)/sample_rate,length(output_channels)),output_channels)
+    subplot(3,1,2)
+    set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+    plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)
+    subplot(3,1,3)
+    set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+   
+    plot(fp,P1)
+    xlim([0 210])
+    title('Frekvens -> pulsplot')
+    xlabel('Puls [bpm]')
+end
