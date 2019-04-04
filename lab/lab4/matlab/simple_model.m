@@ -1,9 +1,9 @@
 load('muab.mat');
 
 
-red_wavelength = 600 %%INSERT_RED_WAVELENGTH (unit nm)
-green_wavelength = 515 %%INSERT_GREEN_WAVELENGTH (unit nm)
-blue_wavelength = 470 %%INSERT_BLUE_WAVELENGTH (unit nm)
+red_wavelength = 600; %%INSERT_RED_WAVELENGTH (unit nm)
+green_wavelength = 515; %%INSERT_GREEN_WAVELENGTH (unit nm)
+blue_wavelength = 460; %%INSERT_BLUE_WAVELENGTH (unit nm)
 
 wavelengths = [red_wavelength, green_wavelength, blue_wavelength];
 
@@ -12,14 +12,14 @@ mua_blood_oxy = @(x) interp1(muabo(:,1), muabo(:,2), x);
 mua_blood_deoxy = @(x) interp1(muabd(:,1), muabd(:,2), x);
 
 
-bvf = 0.01; %blood volume fraction, average amount of blood in the tissue
+bvf = [1; 0.01]; %blood volume fraction, average amount of blood in the tissue
 oxy = 0.8; %oxygenation of the blood
 
 %absorption coefficient (mu_a in lab text)
 %units: m^(-1)
 mua_other = 25; %background absorption due to collagen etc
 mua_blood = mua_blood_oxy(wavelengths)*oxy + mua_blood_deoxy(wavelengths)*(1-oxy); %absorption due to pure blood
-mua = mua_blood*bvf + mua_other;
+mua = mua_blood.*bvf + mua_other;
 
 %reduced scattering coefficient (mu_s' in lab text)
 %the magic numbers are from N. Bashkatov, E. A. Genina, V. V. Tuchin.
@@ -32,3 +32,11 @@ musr = (17.6*(wavelengths/500.0).^(-4) + 18.78*(wavelengths/500).^(-0.22))*100;
 
 
 %%INSERT CODE FOR CALCULATING PENETRATION DEPTH DEL
+
+pd = sqrt(1./(3.*(musr+mua).*mua));
+t_h = exp(-sqrt(3*mua(1,:).*(musr+mua(1,:)))*300e-6);
+t_l = exp(-sqrt(3*mua(2,:).*(musr+mua(2,:)))*300e-6);
+r_h = sqrt(3.*(musr./mua(1,:)+1));
+r_l = sqrt(3.*(musr./mua(2,:)+1));
+k_t = abs(t_h-t_l)./t_l;
+k_r = abs(r_h-r_l)./r_l;
