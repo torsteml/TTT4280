@@ -10,6 +10,8 @@ channelsBPass = bandpass(output_channels,[0.67 3.33],sample_rate); % 0.67-3.33 H
 for j = 1:3
     [autocorrelation(:,j),lags] = xcorr(channelsBPass(1:end,j), length(channelsBPass), 'coeff');
 end
+
+%plot(autocorrelation)
 [peaks.red,locs.red] = findpeaks(autocorrelation(:,1));
 [peaks.green,locs.green] = findpeaks(autocorrelation(:,2));
 [peaks.blue,locs.blue] = findpeaks(autocorrelation(:,3));
@@ -80,6 +82,8 @@ plot(linspace(0,length(output_channels)/sample_rate,length(output_channels)),out
 subplot(3,1,2)
 set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
 plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)
+xlabel('Tid[s]')
+ylabel('[a.u.]')
 subplot(3,1,3)
 set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
 fcb=abs(fft(channelsBPass,8192));
@@ -93,5 +97,6 @@ fcb=abs(fft(channelsBPass,8192));
 % --------------------------------------
 plot(fp,P1)
 xlim([0 210])
-title('Frekvens -> pulsplot')
+title('')
 xlabel('Puls [bpm]')
+ylabel('[a.u.]')
