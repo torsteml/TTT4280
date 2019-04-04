@@ -76,6 +76,7 @@ else
     stdPulse.blue = NaN;
 end
 % FFT for SNR and freq plot --------------------
+fcb=abs(fft(channelsBPass,8192));
 l = length(channelsBPass);
 P2 = abs(fcb/l);
 P1 = P2(1:8192/2+1,:);
