@@ -10,6 +10,8 @@ channelsBPass = bandpass(output_channels,[0.67 3.33],sample_rate); % 0.67-3.33 H
 for j = 1:3
     [autocorrelation(:,j),lags] = xcorr(channelsBPass(1:end,j), length(channelsBPass), 'coeff');
 end
+
+%plot(autocorrelation)
 [peaks.red,locs.red] = findpeaks(autocorrelation(:,1));
 [peaks.green,locs.green] = findpeaks(autocorrelation(:,2));
 [peaks.blue,locs.blue] = findpeaks(autocorrelation(:,3));
@@ -74,7 +76,6 @@ else
     stdPulse.blue = NaN;
 end
 % FFT for SNR and freq plot --------------------
-fcb=abs(fft(channelsBPass,8192));
 l = length(channelsBPass);
 P2 = abs(fcb/l);
 P1 = P2(1:8192/2+1,:);
@@ -111,3 +112,9 @@ if should_plot
     title('Frekvens -> pulsplot')
     xlabel('Puls [bpm]')
 end
+plot(fp,P1)
+xlim([0 210])
+title('')
+xlabel('Puls [bpm]')
+ylabel('[a.u.]')
+

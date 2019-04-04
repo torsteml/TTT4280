@@ -91,7 +91,7 @@ actualPulse = [
     75   73    72    74    73    90   73;  
     73   76    72    72    65   124   71];
 
-prompt = 'Velg situasjon [1-7]:\n1) Transmittans boks Torstein\n2) Transmittans boks Gaute\n3) Reflektans Torstein\n4) Reflektans Gaute\n5) Transmittans direkte \n6) Høy puls\n7) Kaldre fingre\n0) Avslutt\n';
+prompt = 'Velg situasjon [1-7]:\n1) Transmittans boks Torstein\n2) Transmittans boks Gaute\n3) Reflektans Torstein\n4) Reflektans Gaute\n5) Transmittans direkte \n6) Hï¿½y puls\n7) Kaldre fingre\n0) Avslutt\n';
 while true
     
     sit = input(prompt);
@@ -103,43 +103,43 @@ while true
                 errorbar(meanTBT,stdTBT,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Transmittans boks Torstein');
+                %title('Transmittans boks person 1');
                
             case 2
                 errorbar(meanTBG,stdTBG,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Transmittans boks Gaute');
+                %title('Transmittans boks person 2');
 
             case 3
                 errorbar(meanRT,stdRT,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Reflektans Torstein');
+                %title('Reflektans person 1');
 
             case 4
                 errorbar(meanRG,stdRG,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Reflektans Gaute');
+                %title('Reflektans person 2');
 
             case 5
                 errorbar(meanTDT,stdTDT,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Transmittans direkte Torstein');
+                %title('Transmittans direkte person 1');
 
             case 6
                 errorbar(meanHP,stdHP,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Høy puls Torstein');
+                %title('HÃ¸y puls person 1');
                 
             case 7
                 errorbar(meanKF,stdKF,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                title('Kalde fingre Gaute');
+                %title('Kalde fingre person 2');
                 
             case 0
                 close all
@@ -149,10 +149,11 @@ while true
     set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
     ax=gca;
     ax.YGrid = 'on';
-    xlabel('Måletilfelle');
-    ylabel('Puls [bpm]');
+    ax.FontSize = 10; 
+    xlabel('MÃ¥letilfelle','FontSize',14);
+    ylabel('Puls [bpm]','FontSize',14);
     xlim([0.75 5.25]);
     box on
     xticks([1 2 3 4 5]);
-    legend('Rød','Grønn','Blå','Faktisk','Location','best')
+    legend('RÃ¸d kanal','GrÃ¸nn kanal','BlÃ¥ kanal','Faktisk puls','Location','best','FontSize',14)
 end
