@@ -133,7 +133,7 @@ while true
                 errorbar(meanHP,stdHP,'--')
                 hold on
                 plot(actualPulse(:,sit),'k');
-                %title('HÃ¸y puls person 1');
+                %title('Høy puls person 1');
                 
             case 7
                 errorbar(meanKF,stdKF,'--')
@@ -150,10 +150,10 @@ while true
     ax=gca;
     ax.YGrid = 'on';
     ax.FontSize = 10; 
-    xlabel('MÃ¥letilfelle','FontSize',14);
+    xlabel('Måletilfelle','FontSize',14);
     ylabel('Puls [bpm]','FontSize',14);
     xlim([0.75 5.25]);
     box on
     xticks([1 2 3 4 5]);
-    legend('RÃ¸d kanal','GrÃ¸nn kanal','BlÃ¥ kanal','Faktisk puls','Location','best','FontSize',14)
+    legend('Rød kanal','Grønn kanal','Blå kanal','Referanse','Location','best','FontSize',14)
 end

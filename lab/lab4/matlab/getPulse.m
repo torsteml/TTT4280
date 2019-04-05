@@ -111,19 +111,26 @@ else
 end
 fprintf('Red Pulse: %.1f STD: %.1f\t Green Pulse: %.1f STD: %.1f\t Blue Pulse: %.1f STD: %.1f\n',mean(pulse.red),stdPulse.red,mean(pulse.green),stdPulse.green,mean(pulse.blue),stdPulse.blue);
 fprintf('SNR[dB]: %.2f \t %.2f \t %.2f\n',SNR.red,SNR.green,SNR.blue);
-should_plot = false;
+should_plot = true;
 if should_plot 
-    subplot(3,1,1)
+    subplot(4,1,1)
     set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
     plot(linspace(0,length(output_channels)/sample_rate,length(output_channels)),output_channels)
-    subplot(3,1,2)
+    subplot(4,1,2)
     set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
     plot(linspace(0,length(channelsBPass)/sample_rate,length(channelsBPass)),channelsBPass)
-    subplot(3,1,3)
+    subplot(4,1,3)
     set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
     plot(fp,P1)
     xlim([0 210])
     title('')
     xlabel('Puls [bpm]')
     ylabel('[a.u.]')
+    subplot(4,1,4)
+    set(gca, 'ColorOrder', [1 0 0; 0 1 0; 0 0 1],'NextPlot', 'replacechildren'); % RGB colors
+    plot(40./lags*60,autocorrelation)
+    xlim([0 210])
+    ylabel('[a.u.]')
+    xlabel('Puls [bpm]')
+    legend('Rød','Grønn','Blå','Location','best')
 end

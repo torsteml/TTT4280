@@ -34,7 +34,7 @@ musr = (17.6*(wavelengths/500.0).^(-4) + 18.78*(wavelengths/500).^(-0.22))*100;
 %%INSERT CODE FOR CALCULATING PENETRATION DEPTH DEL
 
 pd = sqrt(1./(3.*(musr+mua).*mua));
-t_h = exp(-sqrt(3*mua(1,:).*(musr+mua(1,:)))*13e-3);
+t_h = exp(-sqrt(3*mua(1,:).*(musr+mua(1,:)))*e-3);
 t_l = exp(-sqrt(3*mua(2,:).*(musr+mua(2,:)))*13e-3);
 r_h = sqrt(3.*(musr+mua(1,:)));
 r_l = sqrt(3.*(musr+mua(2,:)));
